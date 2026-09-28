@@ -54,4 +54,12 @@ describe("paper execution boundaries", () => {
     await engine.onBook(mkBook(3, 0.001, 0.003));
     expect(model.calls).toBe(1);
   });
+
+  test("an RPC outage changes the dashboard to degraded until a fresh book arrives", async () => {
+    const engine = new PaperEngine({ mode: "paper", model: new FixedModel(["hold"]), orderSizeMon: 10, positionCapMon: 20, startingCash: 10 });
+    engine.setUnavailable("RPC unavailable");
+    expect(engine.snapshot().status).toBe("degraded");
+    const recovered = await engine.onBook(mkBook(1, 0.019, 0.021));
+    expect(recovered.status).toBe("live");
+  });
 });

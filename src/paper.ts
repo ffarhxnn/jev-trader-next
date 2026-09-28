@@ -48,6 +48,7 @@ export class PaperEngine {
   private lastDecision: Decision | null = null;
   private notice = "Starting local feed.";
   private stopped = false;
+  private feedFailed = false;
   private processing = false;
   private modelStatus: ModelStatus = { state: "ready", retryAt: null, reason: null };
   private listeners = new Set<(snapshot: Snapshot) => void>();
@@ -68,7 +69,7 @@ export class PaperEngine {
     const equity = this.cash + this.inventory * mid;
     const unrealized = this.inventory === 0 ? 0 : this.inventory * (mid - this.basis);
     return {
-      status: this.stopped ? "stopped" : this.modelStatus.state === "failed" ? "degraded" : this.lastBook ? "live" : "connecting",
+      status: this.stopped ? "stopped" : this.modelStatus.state === "failed" || this.feedFailed ? "degraded" : this.lastBook ? "live" : "connecting",
       mode: this.options.mode,
       model: this.options.model.name,
       modelStatus: this.modelStatus.state,
@@ -91,6 +92,7 @@ export class PaperEngine {
     try {
       this.blocks++;
       this.lastBook = book;
+      this.feedFailed = false;
       this.history.push({ ts: this.now(), price: book.mid });
       if (this.history.length > 1500) this.history.shift();
       this.resolveResting(book);
@@ -124,7 +126,7 @@ export class PaperEngine {
     } finally { this.processing = false; }
   }
 
-  setUnavailable(message: string) { this.notice = message; this.modelStatus = this.options.model.status(); this.publish(); }
+  setUnavailable(message: string) { this.feedFailed = true; this.notice = message; this.modelStatus = this.options.model.status(); this.publish(); }
 
   private createQuote(book: Book, decision: Decision) {
     if (decision.action === "hold") { this.cancelResting("replaced by hold"); return; }
