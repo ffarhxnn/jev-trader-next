@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#0d1113" />
+  <title>Jev Trader — paper desk</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body data-status="connecting" data-mode="demo">
+  <div class="shell">
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark">J</span><span>jev trader</span></div>
+      <div class="topbar-right"><span id="mode" class="mode-chip">DETERMINISTIC DEMO</span><span id="status" class="status-chip"><i></i> CONNECTING</span></div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-main">
+          <p class="eyebrow">MON / USDC <span class="separator">·</span> <span id="market-source">SYNTHETIC PRICE PATH</span></p>
+          <div class="price-line"><strong id="price">—</strong><span class="price-unit">USDC</span></div>
+          <div class="market-meta"><span>BLOCK <b id="block">—</b></span><span>SPREAD <b id="spread">—</b></span></div>
+        </div>
+        <div class="hero-side"><p class="eyebrow">PAPER MODE ONLY</p><p>A labeled model selects a side. Quotes and fills are simulated. No wallet signs and no order is sent.</p></div>
+      </section>
+
+      <section class="decision-grid">
+        <article class="card decision-card">
+          <div class="card-head"><span class="eyebrow">MODEL DECISION</span><span id="model" class="model-name">awaiting model</span></div>
+          <div class="decision-row"><strong id="decision">HOLD</strong><span id="confidence" class="confidence">—</span></div>
+          <div class="probability-track"><span id="buy-bar"></span></div>
+          <div class="probability-labels"><span id="buy-prob">BUY —</span><span id="sell-prob">SELL —</span></div>
+          <div class="decision-foot"><span>LATENCY <b id="latency">—</b></span><span id="quote">NO PAPER QUOTE</span></div>
+        </article>
+        <article class="card chart-card">
+          <div class="card-head"><span class="eyebrow">PRICE PATH</span><span>recent observed mids</span></div>
+          <svg viewBox="0 0 600 190" role="img" aria-label="Recent MON USDC mid prices"><line x1="0" y1="95" x2="600" y2="95" class="midline"/><polyline id="chart" points="" /></svg>
+          <div class="chart-foot"><span id="chart-source">Generated path · demo</span><span id="position">FLAT PAPER POSITION</span></div>
+        </article>
+      </section>
+
+      <section class="stats" aria-label="Paper session totals">
+        <div class="stat"><span>BLOCKS</span><strong id="blocks">0</strong></div>
+        <div class="stat"><span>DECISIONS</span><strong id="decisions">0</strong></div>
+        <div class="stat"><span>PAPER QUOTES</span><strong id="quotes">0</strong></div>
+        <div class="stat"><span>SIM FILLS</span><strong id="fills">0</strong></div>
+        <div class="stat"><span>MODELED FEES</span><strong id="fees">$0.00</strong></div>
+        <div class="stat"><span>SIM P&amp;L</span><strong id="pnl">$0.00</strong></div>
+      </section>
+
+      <section class="bottom-grid">
+        <article class="card tape-card"><div class="card-head"><span class="eyebrow">PAPER EVENT TAPE</span><span>newest first</span></div><div class="table-wrap"><table><thead><tr><th>BLOCK</th><th>EVENT</th><th>SIDE</th><th>PRICE</th><th>SIZE</th></tr></thead><tbody id="tape"><tr><td colspan="5" class="empty">Waiting for the first observed book...</td></tr></tbody></table></div></article>
+        <aside class="card note-card"><span class="eyebrow">TRANSPARENCY</span><h2>Watch the model. Audit the paper trail.</h2><p id="notice">Connecting to the local read-only feed.</p><p>Quotes are post-only simulations. Any fill is an assumption, not an on-chain transaction. Displayed P&amp;L is paper accounting, not verified returns.</p><div class="note-rule"></div><span class="eyebrow">SOURCE LABELS</span><p>Live book means on-chain market data. Deterministic demo means generated prices. Jev decisions require the exact free model; no paid or heuristic fallback is hidden.</p></aside>
+      </section>
+    </main>
+    <footer><span>Jev Trader <span class="separator">·</span> independent paper build</span><span>Experimental research interface <span class="separator">·</span> no live trades</span></footer>
+  </div>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>
