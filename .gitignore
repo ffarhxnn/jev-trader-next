@@ -2,3 +2,12 @@ node_modules/
 .env
 data/
 dist/
+
+# Local credentials and generated files
+.env*
+!.env.example
+*.pem
+*.key
+__pycache__/
+*.pyc
+.DS_Store

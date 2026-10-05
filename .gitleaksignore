@@ -1,0 +1,2 @@
+# Historical blank key followed by numeric cadence setting; reviewed false positive.
+e72bba923a55e7772cad78a6c2368dc9db8c8504:.env.example:generic-api-key:17

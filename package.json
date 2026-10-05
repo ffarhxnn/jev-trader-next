@@ -6,14 +6,37 @@
   "scripts": {
     "dev": "bun --watch src/index.ts",
     "start": "bun run src/index.ts",
-    "test": "bun test",
-    "typecheck": "bunx tsc --noEmit"
+    "record:l2": "bun run scripts/record-l2.ts",
+    "backtest": "bun run scripts/backtest.ts",
+    "markout": "bun run scripts/markout.ts",
+    "markout:walk-forward": "bun run scripts/walk-forward-markout.ts",
+    "backtest:walk-forward": "bun run scripts/walk-forward-replay.ts",
+    "backtest:single-placement": "bun --no-env-file scripts/single-placement-replay.ts",
+    "slice:replay": "bun run scripts/slice-replay-window.ts",
+    "slice:depth": "bun run scripts/slice-depth-window.ts",
+    "paper:trade-analysis": "bun run scripts/paper-trade-analysis.ts",
+    "verify:market": "bun run scripts/verify-market.ts",
+    "readiness:kuru-mainnet": "bun run scripts/kuru-mainnet-preflight.ts",
+    "verify:receipts": "bun run scripts/verify-trade-receipts.ts",
+    "reconstruct:trades": "bun run scripts/reconstruct-receipt-trades.ts",
+    "risk:reset": "bun run scripts/reset-paper-risk-stop.ts",
+    "test": "bun --no-env-file test --timeout 30000",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@ai-sdk/google": "^4.0.86",
+    "@ai-sdk/openai": "^4.0.82",
+    "@ai-sdk/openai-compatible": "^3.0.60",
     "@ai-sdk/typesafe-ai": "3",
     "@kuru-labs/kuru-sdk": "0.0.95",
     "ai": "7",
-    "ethers": "5"
+    "ethers": "5",
+    "zod": "^4"
+  },
+  "overrides": {
+    "elliptic": "6.6.1",
+    "ws@^7.4.6": "7.5.11",
+    "ws@^8.18.0": "8.21.0"
   },
   "devDependencies": {
     "@types/bun": "^1.4.2",
